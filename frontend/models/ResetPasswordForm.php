@@ -12,7 +12,7 @@ use common\models\User;
  */
 class ResetPasswordForm extends Model
 {
-    public $password;
+    public string $password = '';
 
     /**
      * @var \common\models\User
@@ -27,9 +27,9 @@ class ResetPasswordForm extends Model
      * @param array $config name-value pairs that will be used to initialize the object properties
      * @throws InvalidArgumentException if token is empty or not valid
      */
-    public function __construct($token, $config = [])
+    public function __construct(string $token, array $config = [])
     {
-        if (empty($token) || !is_string($token)) {
+        if ($token === '') {
             throw new InvalidArgumentException('Password reset token cannot be blank.');
         }
         $this->_user = User::findByPasswordResetToken($token);
