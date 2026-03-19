@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /** @var yii\web\View $this */
 /** @var yii\bootstrap5\ActiveForm $form */
 /** @var \common\models\LoginForm $model */
@@ -7,10 +9,11 @@
 use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
 
-$this->title = 'Login';
+$this->title = 'Sign in to your account';
 $htmlIcon = <<<HTML
-<div class="input-group"><span class="input-group-text" aria-hidden="true">%s</span>{input}</div>{error}{hint}
+{label}<div class="input-group"><span class="input-group-text" aria-hidden="true">%s</span>{input}</div>{error}{hint}
 HTML;
+$labelOptions = ['class' => 'form-label fw-semibold small'];
 ?>
 <div class="card border-0 overflow-hidden login-split-card">
     <div class="row g-0">
@@ -54,14 +57,13 @@ HTML;
                             ],
                         ) ?>
                     </div>
-                    <h1 class="h3 fw-bold mb-1">Sign in to your account</h1>
+                    <h1 class="h3 fw-bold mb-1"><?= Html::encode($this->title) ?></h1>
                     <p class="text-body-secondary small">Enter your credentials to access the admin panel</p>
                 </div>
 
                 <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
 
                 <div class="mb-3">
-                    <label class="form-label fw-semibold small" for="loginform-username">Your Username</label>
                     <?= $form->field($model, 'username', [
                         'options' => ['class' => 'mb-0'],
                         'template' => sprintf($htmlIcon, '&#128100;'),
@@ -70,11 +72,10 @@ HTML;
                             'placeholder' => 'username',
                             'autofocus' => true,
                         ],
-                    ])->textInput() ?>
+                    ])->textInput()->label('Your Username', $labelOptions) ?>
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label fw-semibold small" for="loginform-password">Your Password</label>
                     <?= $form->field($model, 'password', [
                         'options' => ['class' => 'mb-0'],
                         'template' => sprintf($htmlIcon, '&#128274;'),
@@ -82,7 +83,7 @@ HTML;
                             'class' => 'form-control',
                             'placeholder' => 'Password',
                         ],
-                    ])->passwordInput() ?>
+                    ])->passwordInput()->label('Your Password', $labelOptions) ?>
                 </div>
 
                 <div class="mb-4">
